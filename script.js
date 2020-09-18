@@ -67,19 +67,57 @@ function getRndInteger(min, max) {
 //password needs to be between 8 and 128 characters
 //we need to check to make sure we have at least one acceptance criterea turned on
 
-function initialPrompts();{
+function initialLengthPrompt() {
+  do {
+    //declarations.
+    var passLength = prompt("How long would you like your password?  Minimum 8 Characters. Maximum 128.");
+    var isValid = false;
 
+    //check for valid length.  Reiterate to user their password length if it's acceptable.
+    if (passLength < 8 || passLength > 128){
+      alert("Your password input wasn't within the valid range!");
+    } else {
+      alert("Your password will be " + passLength +" characters long.");
+      isValid = true;
+    }
+  } while (isValid == false);
 }
 
+function initialAcceptancePrompts() {
+  do {
+    //variable declaration
+    var acceptLower = confirm("Would you like lower case letters in this password?");
+    var acceptUpper = confirm("Would you like upper case letters in this password?");
+    var acceptNums = confirm("Would you like numbers in this password?");
+    var acceptSpecial = confirm("Would you like special characters in this password?");
+    var isValid = false;
+
+    //logical nots to check if we have at least one critera turned on.  Reiterate to user what they chose.
+    if (!acceptLower && !acceptUpper && !acceptNums && !acceptSpecial){
+      alert("You must select at least one type of characters to include!");
+    } else {
+      alert("Your password will contain" + "\r\n" +
+      "Lowercase characters: " + acceptLower + "\r\n" +
+      "Uppercase characters: " + acceptUpper + "\r\n" +
+      "Numbers: " + acceptNums + "\r\n" +
+      "Special characters: " + acceptSpecial);
+      isValid = true;
+    }
+  } while (isValid == false);
+}
 
 function generatePassword(passLength, acceptSpecial, acceptUpper, acceptLower, acceptNums) {
+  
+  //call our two other functions to take our variables
+  initialLengthPrompt()
+  initialAcceptancePrompts()
 
   var storeChar = "";
   console.log("storeChar", storeChar);
 
   //our end condition for this code block is generating a single character to add to our password.
   //if we return a string, we know we have converted the character and it is ready to add to our password.
-   while (typeof(numForCharacter !== 'string')); {
+   while (typeof(numForCharacter !== 'string')) {
      var numForCharacter = getRndInteger(33, 127);
      console.log("numForCharacter", numForCharacter);
 
@@ -90,7 +128,7 @@ function generatePassword(passLength, acceptSpecial, acceptUpper, acceptLower, a
      //since specials are a disjointed set, leave their case till last.
 
      //Check if number
-     if (numForCharacter >=48 && numForCharacter < 58);{
+     if (numForCharacter >= 48 && numForCharacter < 58){
        if (acceptNums){
          storeChar += String.fromCharCode(numForCharacter)
        } else {
