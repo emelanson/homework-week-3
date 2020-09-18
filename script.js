@@ -30,35 +30,45 @@ generateBtn.addEventListener("click", writePassword);
 
 //Could just make a function with randomInt(2), if 1 then .toUpper()
 // use toUpper() when needed
-var validChars = [""];
-var lowerLetterArr = [
-	"a",
-	"b",
-	"c",
-	"d",
-	"e",
-	"f",
-	"g",
-	"h",
-	"i",
-	"j",
-	"k",
-	"l",
-	"m",
-	"n",
-	"o",
-	"p",
-	"q",
-	"r",
-	"s",
-	"t",
-	"u",
-	"v",
-	"w",
-	"x",
-	"y",
-	"z",
-];
+
+//pulled variables out for scope issue
+var acceptLower = undefined;
+var acceptUpper = undefined;
+var acceptNums = undefined;
+var acceptSpecial = undefined;
+
+var validChars = [];
+//trying a version of lower letter that is a string so we can split and toUpperCase
+// var lowerLetterArr = [
+// 	"a",
+// 	"b",
+// 	"c",
+// 	"d",
+// 	"e",
+// 	"f",
+// 	"g",
+// 	"h",
+// 	"i",
+// 	"j",
+// 	"k",
+// 	"l",
+// 	"m",
+// 	"n",
+// 	"o",
+// 	"p",
+// 	"q",
+// 	"r",
+// 	"s",
+// 	"t",
+// 	"u",
+// 	"v",
+// 	"w",
+// 	"x",
+// 	"y",
+// 	"z",
+// ];
+var lowerLetters = "abcdefghijklmnopqrstuvwxyz";
+var upperLetters = lowerLetters.toUpperCase();
 var numArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var specialsArr = [
 	"!",
@@ -149,14 +159,14 @@ function initialLengthPrompt() {
 function initialAcceptancePrompts() {
 	do {
 		//variable declaration
-		var acceptLower = confirm(
+		acceptLower = confirm(
 			"Would you like lower case letters in this password?"
 		);
-		var acceptUpper = confirm(
+		acceptUpper = confirm(
 			"Would you like upper case letters in this password?"
 		);
-		var acceptNums = confirm("Would you like numbers in this password?");
-		var acceptSpecial = confirm(
+		acceptNums = confirm("Would you like numbers in this password?");
+		acceptSpecial = confirm(
 			"Would you like special characters in this password?"
 		);
 		var isValid = false;
@@ -187,24 +197,20 @@ function initialAcceptancePrompts() {
 
 //function to create valid characters based on accept flags
 //push contents of arrays that we need into our validChars array
+//need to spread (...) arrays so we don't end up with nested arrays
 
-function generateValidCharArray(
-	acceptSpecial,
-	acceptUpper,
-	acceptLower,
-	acceptNums
-) {
-	if (acceptNums) {
-		validChars.push(numArr);
+function generateValidCharArray(Lower, Upper, Nums, Special) {
+	if (Lower) {
+		validChars.push(...lowerLetters.split(""));
 	}
-	if (acceptSpecial) {
-		validChars.push(specialsArr);
+	if (Upper) {
+		validChars.push(...upperLetters.split(""));
 	}
-	if (acceptLower) {
-		validChars.push(lowerLetterArr);
+	if (Nums) {
+		validChars.push(...numArr);
 	}
-	if (acceptUpper) {
-		validChars.push(lowerLetterArr.toUpper());
+	if (Special) {
+		validChars.push(...specialsArr);
 	}
 }
 
@@ -213,7 +219,7 @@ function generatePassword(passLength) {
 	initialLengthPrompt();
 	initialAcceptancePrompts();
 	//generate our valid character array
-	generateValidCharArray();
+	generateValidCharArray(acceptLower, acceptUpper, acceptNums, acceptSpecial);
 	console.log("ValidChars: ", validChars);
 
 	//use this variable to store characters for our password
