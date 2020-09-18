@@ -112,14 +112,14 @@ function generatePassword(passLength, acceptSpecial, acceptUpper, acceptLower, a
   initialLengthPrompt()
   initialAcceptancePrompts()
 
+
   var storeChar = "";
-  console.log("storeChar", storeChar);
 
   //our end condition for this code block is generating a single character to add to our password.
   //if we return a string, we know we have converted the character and it is ready to add to our password.
-   while (typeof(numForCharacter !== 'string')) {
-     var numForCharacter = getRndInteger(33, 127);
-     console.log("numForCharacter", numForCharacter);
+   while (storeChar.length != passLength) {
+    var numForCharacter = getRndInteger(33, 127);
+     console.log("numForCharacter", numForCharacter, String.fromCharCode(numForCharacter));
 
      //Case statements for our different ranges.  
      //Find range of number
@@ -127,17 +127,30 @@ function generatePassword(passLength, acceptSpecial, acceptUpper, acceptLower, a
      //reject the number if it isn't an accepted character
      //since specials are a disjointed set, leave their case till last.
 
-     //Check if number
-     if (numForCharacter >= 48 && numForCharacter < 58){
-       if (acceptNums){
-         storeChar += String.fromCharCode(numForCharacter)
-       } else {
-         return
-       }
+     //if a generated numForCharacter 
+     //is a NOT accepted type for the range it falls in
+     //reject it
 
+     //special has a very long case
+     //if it passes, add it to storeChar
+     
+     if ((!acceptNums && (numForCharacter >= 48 && numForCharacter < 57)) ||
+        (!acceptUpper && (numForCharacter >= 97 && numForCharacter <= 122)) ||
+        (!acceptLower && (numForCharacter >= 65 && numForCharacter <= 90)) ||
+        (!acceptSpecial && (numForCharacter >= 33 && numForCharacter <= 47) || 
+                          (numForCharacter >= 58 && numForCharacter <= 64) || 
+                          (numForCharacter >= 91 && numForCharacter <= 96) ||
+                          (numForCharacter >= 123 && numForCharacter <= 126)
+         )
+        )
+      {
+         
+       } else {
+        storeChar += String.fromCharCode(numForCharacter)
+        console.log("storeChar", storeChar);
+       }
      }
 
+    //Our while loop ends, return storeChar
+    return storeChar;
     }
-
-
- }
