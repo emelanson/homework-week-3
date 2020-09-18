@@ -32,10 +32,11 @@ generateBtn.addEventListener("click", writePassword);
 // use toUpper() when needed
 
 //pulled variables out for scope issue
-var acceptLower = undefined;
-var acceptUpper = undefined;
-var acceptNums = undefined;
-var acceptSpecial = undefined;
+var passLength;
+var acceptLower;
+var acceptUpper;
+var acceptNums;
+var acceptSpecial;
 
 var validChars = [];
 //trying a version of lower letter that is a string so we can split and toUpperCase
@@ -140,8 +141,7 @@ function getRndInteger(min, max) {
 
 function initialLengthPrompt() {
 	do {
-		//declarations.
-		var passLength = prompt(
+		passLength = prompt(
 			"How long would you like your password?  Minimum 8 Characters. Maximum 128."
 		);
 		var isValid = false;
@@ -214,31 +214,21 @@ function generateValidCharArray(Lower, Upper, Nums, Special) {
 	}
 }
 
-function generatePassword(passLength) {
+function generatePassword() {
 	//call our two other functions to take our variables
 	initialLengthPrompt();
 	initialAcceptancePrompts();
 	//generate our valid character array
 	generateValidCharArray(acceptLower, acceptUpper, acceptNums, acceptSpecial);
-	console.log("ValidChars: ", validChars);
 
 	//use this variable to store characters for our password
 	var storeChar = [""];
 
 	//our end condition for this code block is generating a single character to add to our password.
 	//if our password holder is the length the user desires, exit
-	// while (storeChar.length != passLength) {
-	// 	 else {
-	// 		storeChar += String.fromCharCode(numForCharacter);
-	// 		console.log("storeChar", storeChar);
-	// 	}
-	// }
-
-	// //Our while loop ends, return storeChar
-	// return storeChar;
+	while (storeChar.length < passLength) {
+		storeChar += validChars[Math.floor(Math.random() * validChars.length)];
+		console.log("storeChar", storeChar);
+	}
+	return storeChar;
 }
-
-//new solution:
-//Create arrays for each character set
-//append to generation array for each option selected
-//use randomly select (use length) from generation array and append to storeChar
