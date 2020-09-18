@@ -12,65 +12,21 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-//Possible flow
-//random number generation
-//reject number if it doesn't meet criterea
-//number to string
-//
-//appending to password
-//checking length
-
-//ASCII is base128
-//Generate number between 33-126
-//Indices for needed characters:
-//Special: 33-47, 58-64, 91-96, 123-126
-//Nums: 48-57
-//Caps: 65-90
-//Lower: 97-122
-
-//Could just make a function with randomInt(2), if 1 then .toUpper()
-// use toUpper() when needed
-
-//pulled variables out for scope issue
+//Globals
 var passLength;
 var acceptLower;
 var acceptUpper;
 var acceptNums;
 var acceptSpecial;
 
+//array for characters the user wants
 var validChars = [];
-//trying a version of lower letter that is a string so we can split and toUpperCase
-// var lowerLetterArr = [
-// 	"a",
-// 	"b",
-// 	"c",
-// 	"d",
-// 	"e",
-// 	"f",
-// 	"g",
-// 	"h",
-// 	"i",
-// 	"j",
-// 	"k",
-// 	"l",
-// 	"m",
-// 	"n",
-// 	"o",
-// 	"p",
-// 	"q",
-// 	"r",
-// 	"s",
-// 	"t",
-// 	"u",
-// 	"v",
-// 	"w",
-// 	"x",
-// 	"y",
-// 	"z",
-// ];
+
+//arrays for our prompts
 var lowerLetters = "abcdefghijklmnopqrstuvwxyz";
 var upperLetters = lowerLetters.toUpperCase();
 var numArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+//some symbols need escaping.
 var specialsArr = [
 	"!",
 	"'",
@@ -106,39 +62,12 @@ var specialsArr = [
 	"~",
 ];
 
-//split() [Uses unicode units so it should work] specials into an array
-
-// could also try math.random()*9 or getRandomInt().  use .toString() later.
-
-//Special characters array.  Might be a better way?
-
-//possible scope issue with char, needs to be used in generate character and password
-//
-
 //this is from w3 schools
-
 function getRndInteger(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
-//create ASCII characters from the random number generator
-//String.fromCharCode(getRndInteger(33, 127))
-
-//A universal function to evaluate whether we should reject or accept a character based on our variable
-
-// function acceptanceCheck(acceptType);{
-//   if (acceptType){
-//     return true;
-//   } else{
-
-//   }
-
-// }
-
-//Prompts for our Password gen Variables
-//password needs to be between 8 and 128 characters
-//we need to check to make sure we have at least one acceptance criterea turned on
-
+//Prompts
 function initialLengthPrompt() {
 	do {
 		passLength = prompt(
@@ -218,14 +147,14 @@ function generatePassword() {
 	//call our two other functions to take our variables
 	initialLengthPrompt();
 	initialAcceptancePrompts();
+
 	//generate our valid character array
 	generateValidCharArray(acceptLower, acceptUpper, acceptNums, acceptSpecial);
 
-	//use this variable to store characters for our password
+	//use this variable to store characters and return our password
 	var storeChar = [""];
 
-	//our end condition for this code block is generating a single character to add to our password.
-	//if our password holder is the length the user desires, exit
+	//Pick a random character from validChars and add it to storeChar
 	while (storeChar.length < passLength) {
 		storeChar += validChars[Math.floor(Math.random() * validChars.length)];
 		console.log("storeChar", storeChar);
