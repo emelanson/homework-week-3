@@ -25,6 +25,8 @@ var validChars = [];
 //arrays for our prompts
 var lowerLetters = "abcdefghijklmnopqrstuvwxyz";
 var upperLetters = lowerLetters.toUpperCase();
+console.log(upperLetters);
+
 var numArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 //some symbols need escaping.
 var specialsArr = [
@@ -144,6 +146,9 @@ function generateValidCharArray(Lower, Upper, Nums, Special) {
 }
 
 function generatePassword() {
+	//empty validChars to avoid bug from generating multiple passwords.
+	validChars = [];
+
 	//call our two other functions to take our variables
 	initialLengthPrompt();
 	initialAcceptancePrompts();
